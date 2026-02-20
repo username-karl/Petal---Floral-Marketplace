@@ -3,10 +3,13 @@ package com.petal
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.petal.network.ApiClient
 import com.petal.util.TokenManager
 import kotlinx.coroutines.Dispatchers
@@ -15,10 +18,11 @@ import kotlinx.coroutines.withContext
 
 class DashboardActivity : AppCompatActivity() {
 
-    private lateinit var tvName: TextView
-    private lateinit var tvEmail: TextView
-    private lateinit var tvRole: TextView
-    private lateinit var tvWelcome: TextView
+    private lateinit var tvWelcomeName: TextView
+    private lateinit var ivAvatar: ImageView
+    private lateinit var ivPopular1: ImageView
+    private lateinit var ivPopular2: ImageView
+    private lateinit var bottomNav: BottomNavigationView
     private lateinit var btnLogout: Button
 
     private lateinit var tokenManager: TokenManager
@@ -29,11 +33,37 @@ class DashboardActivity : AppCompatActivity() {
 
         tokenManager = TokenManager(this)
 
-        tvWelcome = findViewById(R.id.tvWelcome)
-        tvName = findViewById(R.id.tvName)
-        tvEmail = findViewById(R.id.tvEmail)
-        tvRole = findViewById(R.id.tvRole)
+        tvWelcomeName = findViewById(R.id.tvWelcomeName)
+        ivAvatar = findViewById(R.id.ivAvatar)
+        ivPopular1 = findViewById(R.id.ivPopular1)
+        ivPopular2 = findViewById(R.id.ivPopular2)
+        bottomNav = findViewById(R.id.bottomNav)
         btnLogout = findViewById(R.id.btnLogout)
+
+        // Load placeholder image for avatar
+        Glide.with(this)
+            .load("https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=250&auto=format&fit=crop")
+            .centerCrop()
+            .into(ivAvatar)
+
+        // Load mock bouquet images
+        Glide.with(this)
+            .load("https://images.unsplash.com/photo-1596627672288-757c91799e0c?q=80&w=400&auto=format&fit=crop")
+            .centerCrop()
+            .into(ivPopular1)
+            
+        Glide.with(this)
+            .load("https://images.unsplash.com/photo-1563241598-6ce3b266e744?q=80&w=400&auto=format&fit=crop")
+            .centerCrop()
+            .into(ivPopular2)
+
+        // Bottom nav listener
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_profile -> performLogout() // Quick action to logout for debug
+            }
+            true
+        }
 
         fetchUserProfile()
 
@@ -51,10 +81,8 @@ class DashboardActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful && response.body()?.success == true) {
                         val user = response.body()?.data
-                        tvWelcome.text = "Welcome, ${user?.name?.split(" ")?.get(0)}!"
-                        tvName.text = user?.name
-                        tvEmail.text = user?.email
-                        tvRole.text = user?.role
+                        val firstName = user?.name?.split(" ")?.get(0) ?: "Customer"
+                        tvWelcomeName.text = firstName
                     } else {
                         Toast.makeText(this@DashboardActivity, "Session expired.", Toast.LENGTH_SHORT).show()
                         forceLogoutLocally()

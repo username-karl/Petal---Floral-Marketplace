@@ -54,4 +54,7 @@ dependencies {
     
     // Encrypted SharedPreferences
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
+
+    // Glide for Image Loading
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

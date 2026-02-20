@@ -22,7 +22,13 @@
 - [x] **Dashboard/Profile page (protected)** - `src/pages/Dashboard.jsx` & `src/pages/Profile.jsx`
 - [x] **Logout functionality** - `AuthContext.jsx` & UI buttons
 
-### 3️⃣ Documentation Update (FRS – Partial)
+### 3️⃣ Mobile Application (Android)
+- [x] **Register screen** - `RegisterActivity.kt` / `activity_register.xml` (Petal Ivory Aesthetic)
+- [x] **Login screen** - `LoginActivity.kt` / `activity_login.xml` (Petal Ivory Aesthetic)
+- [x] **Dashboard screen (protected)** - `DashboardActivity.kt` / `activity_dashboard.xml` (Explore layout)
+- [x] **Logout functionality** - `DashboardActivity.kt` & TokenManager clearing
+
+### 4️⃣ Documentation Update (FRS – Partial)
 - [x] **ERD Diagram** - Included in `/docs/FRS_PARTIAL.md`
 - [x] **UML Component Diagram** - Included in `/docs/FRS_PARTIAL.md`
 - [-] **Screenshots of Web UI** - *Pending manual capture by user for PDF*
@@ -31,10 +37,10 @@
   - [ ] Dashboard/Profile
   - [ ] Logout
 
-### 4️⃣ Repository Structure
+### 5️⃣ Repository Structure
 - [x] **/web** - React Frontend
 - [x] **/backend** - Spring Boot API
-- [x] **/mobile** - Android Project (Empty for now)
+- [x] **/mobile** - Android Project (Kotlin, Auth, Dashboard, UI Redesign completed)
 - [x] **/docs** - FRS and Diagram Documentation
 - [x] **README.md** - Project Overview
 - [x] **TASK_CHECKLIST.md** - This file
@@ -43,10 +49,9 @@
 
 ## 🔮 Future Phases (TODO)
 
-### Session 2: Core Logic & Mobile
+### Session 2: Core Logic
 - [ ] **Mood-Based Product Catalog**
 - [ ] **"Forget-Me-Not" Scheduler**
-- [ ] **Android App Skeleton**
 
 ### Session 3: Integration
 - [ ] **End-to-End Order Flow**
