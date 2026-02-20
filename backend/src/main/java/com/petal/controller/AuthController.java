@@ -2,6 +2,7 @@ package com.petal.controller;
 
 import com.petal.dto.AuthRequest;
 import com.petal.dto.AuthResponse;
+import com.petal.dto.ApiResponse;
 import com.petal.dto.RegisterRequest;
 import com.petal.entity.User;
 import com.petal.repository.UserRepository;
@@ -20,56 +21,77 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+        private final UserRepository userRepository;
+        private final PasswordEncoder passwordEncoder;
+        private final JwtUtil jwtUtil;
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
-        // Check if email already exists
-        if (userRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(Map.of("message", "Email already registered"));
+        @PostMapping("/register")
+        public ResponseEntity<ApiResponse<Void>> register(@Valid @RequestBody RegisterRequest request) {
+                // Check if email already exists
+                if (userRepository.existsByEmail(request.getEmail())) {
+                        return ResponseEntity
+                                        .status(HttpStatus.CONFLICT)
+                                        .body(ApiResponse.<Void>builder()
+                                                        .success(false)
+                                                        .message("Email already registered")
+                                                        .build());
+                }
+
+                // Create and save user with encrypted password
+                User user = User.builder()
+                                .name(request.getName())
+                                .email(request.getEmail())
+                                .password(passwordEncoder.encode(request.getPassword()))
+                                .role("ROLE_USER")
+                                .build();
+
+                userRepository.save(user);
+
+                return ResponseEntity
+                                .status(HttpStatus.CREATED)
+                                .body(ApiResponse.<Void>builder()
+                                                .success(true)
+                                                .message("Registration successful")
+                                                .build());
         }
 
-        // Create and save user with encrypted password
-        User user = User.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role("ROLE_USER")
-                .build();
+        @PostMapping("/login")
+        public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody AuthRequest request) {
+                // Find user by email
+                User user = userRepository.findByEmail(request.getEmail())
+                                .orElse(null);
 
-        userRepository.save(user);
+                if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                        return ResponseEntity
+                                        .status(HttpStatus.UNAUTHORIZED)
+                                        .body(ApiResponse.<AuthResponse>builder()
+                                                        .success(false)
+                                                        .message("Invalid email or password")
+                                                        .build());
+                }
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(Map.of("message", "Registration successful"));
-    }
+                // Generate JWT token
+                String token = jwtUtil.generateToken(user.getEmail());
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
-        // Find user by email
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElse(null);
+                AuthResponse response = AuthResponse.builder()
+                                .token(token)
+                                .name(user.getName())
+                                .email(user.getEmail())
+                                .role(user.getRole())
+                                .build();
 
-        if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", "Invalid email or password"));
+                return ResponseEntity.ok(ApiResponse.<AuthResponse>builder()
+                                .success(true)
+                                .message("Login successful")
+                                .data(response)
+                                .build());
         }
 
-        // Generate JWT token
-        String token = jwtUtil.generateToken(user.getEmail());
-
-        AuthResponse response = AuthResponse.builder()
-                .token(token)
-                .name(user.getName())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
-
-        return ResponseEntity.ok(response);
-    }
+        @PostMapping("/logout")
+        public ResponseEntity<ApiResponse<Void>> logout() {
+                return ResponseEntity.ok(ApiResponse.<Void>builder()
+                                .success(true)
+                                .message("Logged out successfully")
+                                .build());
+        }
 }

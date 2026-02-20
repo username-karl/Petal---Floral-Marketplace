@@ -1,6 +1,7 @@
 package com.petal.controller;
 
 import com.petal.dto.UserResponse;
+import com.petal.dto.ApiResponse;
 import com.petal.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> getCurrentUser(@AuthenticationPrincipal User user) {
+    public ResponseEntity<ApiResponse<UserResponse>> getCurrentUser(@AuthenticationPrincipal User user) {
         UserResponse response = UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -23,6 +24,10 @@ public class UserController {
                 .role(user.getRole())
                 .build();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
+                .success(true)
+                .message("User fetched successfully")
+                .data(response)
+                .build());
     }
 }
