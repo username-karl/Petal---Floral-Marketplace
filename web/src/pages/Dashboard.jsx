@@ -22,7 +22,7 @@ export default function Dashboard() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const isArtisan = user?.role === 'artisan' || user?.role === 'ARTISAN';
+    const isArtisan = user?.role === 'artisan' || user?.role === 'ARTISAN' || user?.role === 'ROLE_FLORIST';
     const displayName = user?.name || 'Guest';
     const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
@@ -121,198 +121,244 @@ export default function Dashboard() {
             </header>
 
             <main className="pt-20">
-                {/* ─── HERO SECTION ─── */}
-                <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-                    {/* Background Image */}
-                    <div className="absolute inset-0 z-0">
-                        <img
-                            src="https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=2576&auto=format&fit=crop"
-                            alt="Artistic Dried Flowers"
-                            className="w-full h-full object-cover object-center opacity-90 grayscale-[20%]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-transparent opacity-90"></div>
-                    </div>
-
-                    <div className="relative z-10 text-center max-w-4xl px-6 mt-20">
-                        <span className="block text-xs uppercase tracking-[0.2em] text-stone-600 mb-4 animate-fadeIn">Timeless Collection</span>
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-stone-900 leading-[0.9] tracking-tight mb-8">
-                            The art of <br />
-                            <span className="italic text-stone-600">nature preserved</span>
-                        </h1>
-                        <p className="text-base md:text-lg text-stone-700 max-w-lg mx-auto mb-10 font-light leading-relaxed">
-                            Sustainable floral creations, sculpted by time. A raw and poetic aesthetic to elevate your interior without ever fading away.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <a href="#collection" className="group relative px-8 py-3 bg-stone-900 text-stone-50 text-sm font-medium overflow-hidden rounded-sm transition-all hover:bg-stone-800 hover:shadow-lg">
-                                <span className="relative z-10 flex items-center gap-2">
-                                    Explore Collection
-                                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                </span>
-                            </a>
+                {isArtisan ? (
+                    <section className="max-w-7xl mx-auto px-6 py-24 min-h-[70vh]">
+                        <div className="mb-12">
+                            <h2 className="text-4xl md:text-5xl font-serif text-stone-900 tracking-tight mb-4">Artisan Dashboard</h2>
+                            <p className="text-stone-500 text-base font-light">Manage your floral creations and orders.</p>
                         </div>
-                    </div>
-                </section>
-
-                {/* ─── MARQUEE ─── */}
-                <div className="border-y border-stone-200 py-4 bg-white overflow-hidden">
-                    <div className="flex whitespace-nowrap gap-12 animate-marquee items-center opacity-60 hover:opacity-100 transition-opacity">
-                        {[...Array(2)].map((_, i) => (
-                            <div key={i} className="flex gap-12">
-                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Star size={12} /> Handmade in Paris</div>
-                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Flower2 size={12} /> 100% Natural Flowers</div>
-                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Package size={12} /> Zero Plastic Packaging</div>
-                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Clock size={12} /> Lasts 2+ Years</div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="bg-white p-8 border border-stone-200 rounded-sm hover:border-stone-400 transition-colors cursor-pointer group">
+                                <h3 className="font-serif text-xl mb-4 text-stone-900 flex justify-between items-center">
+                                    Pending Orders
+                                    <ArrowRight size={16} className="text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all" />
+                                </h3>
+                                <p className="text-4xl font-light text-stone-600">3</p>
                             </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* ─── COLLECTION GRID ─── */}
-                <section id="collection" className="max-w-7xl mx-auto px-6 py-24">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                        <div>
-                            <h2 className="text-3xl md:text-4xl font-serif text-stone-900 tracking-tight mb-2">Seasonal Selection</h2>
-                            <p className="text-stone-500 text-sm font-light">Autumn / Winter 2026</p>
+                            <div className="bg-white p-8 border border-stone-200 rounded-sm hover:border-stone-400 transition-colors cursor-pointer group">
+                                <h3 className="font-serif text-xl mb-4 text-stone-900 flex justify-between items-center">
+                                    Arranging
+                                    <ArrowRight size={16} className="text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all" />
+                                </h3>
+                                <p className="text-4xl font-light text-stone-600">1</p>
+                            </div>
+                            <div className="bg-white p-8 border border-stone-200 rounded-sm hover:border-stone-400 transition-colors cursor-pointer group">
+                                <h3 className="font-serif text-xl mb-4 text-stone-900 flex justify-between items-center">
+                                    Delivered today
+                                    <ArrowRight size={16} className="text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all" />
+                                </h3>
+                                <p className="text-4xl font-light text-stone-600">12</p>
+                            </div>
                         </div>
-
-                        <div className="flex gap-6 border-b border-stone-200 pb-2">
-                            <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
-                                <input type="checkbox" className="hidden" />
-                                <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
-                                    <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
+                        <div className="mt-12 bg-white border border-stone-200 rounded-sm overflow-hidden">
+                            <div className="px-6 py-4 border-b border-stone-200 bg-[#FDFCF8] flex justify-between items-center">
+                                <h3 className="font-medium text-stone-900 uppercase tracking-wider text-xs">Recent Orders</h3>
+                                <button className="text-[10px] text-stone-500 hover:text-stone-900 transition-colors uppercase tracking-wider font-bold">View Board</button>
+                            </div>
+                            <div className="p-6 text-center text-stone-400 text-sm py-20 flex flex-col items-center justify-center">
+                                <div className="w-16 h-16 rounded-full bg-stone-50 flex items-center justify-center mb-4">
+                                    <Package className="text-stone-300" size={24} />
                                 </div>
-                                <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">In Stock</span>
-                            </label>
-                            <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
-                                <input type="checkbox" className="hidden" defaultChecked />
-                                <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
-                                    <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
-                                </div>
-                                <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">New Arrivals</span>
-                            </label>
+                                <p>No recent orders to display.</p>
+                            </div>
                         </div>
-                    </div>
+                    </section>
+                ) : (
+                    <>
+                        {/* ─── HERO SECTION ─── */}
+                        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+                            {/* Background Image */}
+                            <div className="absolute inset-0 z-0">
+                                <img
+                                    src="https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=2576&auto=format&fit=crop"
+                                    alt="Artistic Dried Flowers"
+                                    className="w-full h-full object-cover object-center opacity-90 grayscale-[20%]"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-transparent opacity-90"></div>
+                            </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
-                        {products.map((product) => (
-                            <div key={product.id} className="group cursor-pointer">
-                                <div className="relative aspect-[4/5] overflow-hidden bg-stone-100 mb-4 rounded-sm">
-                                    <img
-                                        src={product.image}
-                                        alt={product.name}
-                                        className="w-full h-full object-cover image-hover-zoom"
-                                    />
-                                    <div className="absolute bottom-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                                        <button className="bg-white/90 backdrop-blur text-stone-900 p-3 rounded-full shadow-sm hover:bg-stone-900 hover:text-white transition-colors">
-                                            <Plus size={20} strokeWidth={1.5} />
-                                        </button>
+                            <div className="relative z-10 text-center max-w-4xl px-6 mt-20">
+                                <span className="block text-xs uppercase tracking-[0.2em] text-stone-600 mb-4 animate-fadeIn">Timeless Collection</span>
+                                <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-stone-900 leading-[0.9] tracking-tight mb-8">
+                                    The art of <br />
+                                    <span className="italic text-stone-600">nature preserved</span>
+                                </h1>
+                                <p className="text-base md:text-lg text-stone-700 max-w-lg mx-auto mb-10 font-light leading-relaxed">
+                                    Sustainable floral creations, sculpted by time. A raw and poetic aesthetic to elevate your interior without ever fading away.
+                                </p>
+                                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                                    <a href="#collection" className="group relative px-8 py-3 bg-stone-900 text-stone-50 text-sm font-medium overflow-hidden rounded-sm transition-all hover:bg-stone-800 hover:shadow-lg">
+                                        <span className="relative z-10 flex items-center gap-2">
+                                            Explore Collection
+                                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* ─── MARQUEE ─── */}
+                        <div className="border-y border-stone-200 py-4 bg-white overflow-hidden">
+                            <div className="flex whitespace-nowrap gap-12 animate-marquee items-center opacity-60 hover:opacity-100 transition-opacity">
+                                {[...Array(2)].map((_, i) => (
+                                    <div key={i} className="flex gap-12">
+                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Star size={12} /> Handmade in Paris</div>
+                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Flower2 size={12} /> 100% Natural Flowers</div>
+                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Package size={12} /> Zero Plastic Packaging</div>
+                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Clock size={12} /> Lasts 2+ Years</div>
                                     </div>
-                                    {product.tag && (
-                                        <div className="absolute top-4 left-4 bg-stone-900 text-white text-[10px] uppercase font-bold px-2 py-1 tracking-wider">
-                                            {product.tag}
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* ─── COLLECTION GRID ─── */}
+                        <section id="collection" className="max-w-7xl mx-auto px-6 py-24">
+                            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                                <div>
+                                    <h2 className="text-3xl md:text-4xl font-serif text-stone-900 tracking-tight mb-2">Seasonal Selection</h2>
+                                    <p className="text-stone-500 text-sm font-light">Autumn / Winter 2026</p>
+                                </div>
+
+                                <div className="flex gap-6 border-b border-stone-200 pb-2">
+                                    <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
+                                        <input type="checkbox" className="hidden" />
+                                        <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
+                                            <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
                                         </div>
-                                    )}
-                                </div>
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">{product.artisan}</p>
-                                        <h3 className="text-lg font-serif font-medium text-stone-900 leading-none mb-1 group-hover:underline decoration-stone-300 underline-offset-4">
-                                            {product.name}
-                                        </h3>
-                                        <p className="text-xs text-stone-500">{product.subtitle}</p>
-                                    </div>
-                                    <span className="text-sm font-medium text-stone-900">{product.price}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="mt-20 text-center">
-                        <button className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors border-b border-stone-300 hover:border-stone-900 pb-1">
-                            View Full Collection
-                        </button>
-                    </div>
-                </section>
-
-                {/* ─── FORGET-ME-NOT PREVIEW ─── */}
-                <section className="bg-stone-900 text-stone-100 py-24 overflow-hidden">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                            <div className="order-2 lg:order-1 relative">
-                                <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full border border-stone-700/50"></div>
-                                <div className="relative z-10">
-                                    <h2 className="text-4xl md:text-5xl font-serif leading-tight mb-6">
-                                        Never forget <br />
-                                        <span className="italic text-stone-400">a special moment.</span>
-                                    </h2>
-                                    <p className="text-stone-400 text-base leading-relaxed mb-8 font-light">
-                                        Life gets busy, but love shouldn't wait. With our <strong>Forget-Me-Not</strong> service, schedule recurring deliveries for anniversaries and birthdays. We'll remind you 3 days before, so you're always the hero.
-                                    </p>
-
-
-
-                                    <Link to="/profile" className="text-sm text-white font-medium hover:text-stone-300 flex items-center gap-2 group mt-8">
-                                        Manage your dates <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                    </Link>
+                                        <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">In Stock</span>
+                                    </label>
+                                    <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
+                                        <input type="checkbox" className="hidden" defaultChecked />
+                                        <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
+                                            <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
+                                        </div>
+                                        <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">New Arrivals</span>
+                                    </label>
                                 </div>
                             </div>
 
-                            {/* Right Column: Feature Showcase */}
-                            {/* Right Column: Feature Showcase */}
-                            <div className="order-1 lg:order-2 relative h-[400px] w-full flex items-center justify-center p-8">
-                                {/* Decorative elements - subtle glow instead of box */}
-                                <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
-                                    <div className="w-64 h-64 bg-stone-700/30 rounded-full blur-3xl"></div>
-                                </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
+                                {products.map((product) => (
+                                    <div key={product.id} className="group cursor-pointer">
+                                        <div className="relative aspect-[4/5] overflow-hidden bg-stone-100 mb-4 rounded-sm">
+                                            <img
+                                                src={product.image}
+                                                alt={product.name}
+                                                className="w-full h-full object-cover image-hover-zoom"
+                                            />
+                                            <div className="absolute bottom-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                                                <button className="bg-white/90 backdrop-blur text-stone-900 p-3 rounded-full shadow-sm hover:bg-stone-900 hover:text-white transition-colors">
+                                                    <Plus size={20} strokeWidth={1.5} />
+                                                </button>
+                                            </div>
+                                            {product.tag && (
+                                                <div className="absolute top-4 left-4 bg-stone-900 text-white text-[10px] uppercase font-bold px-2 py-1 tracking-wider">
+                                                    {product.tag}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">{product.artisan}</p>
+                                                <h3 className="text-lg font-serif font-medium text-stone-900 leading-none mb-1 group-hover:underline decoration-stone-300 underline-offset-4">
+                                                    {product.name}
+                                                </h3>
+                                                <p className="text-xs text-stone-500">{product.subtitle}</p>
+                                            </div>
+                                            <span className="text-sm font-medium text-stone-900">{product.price}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
 
-                                {/* The Card */}
-                                <div className="bg-stone-800 border border-stone-700 p-8 rounded-sm max-w-md w-full shadow-2xl relative z-10 transform transition-transform hover:scale-105 duration-500">
-                                    <div className="flex items-center gap-5 mb-6">
-                                        <div className="bg-stone-900 p-3 rounded-full text-stone-300 border border-stone-600">
-                                            <Leaf size={24} />
-                                        </div>
-                                        <div>
-                                            <p className="font-serif text-xl text-white">Wife's Birthday</p>
-                                            <p className="text-xs text-stone-400 uppercase tracking-wider font-medium">February 14 • Yearly</p>
-                                        </div>
-                                        <div className="ml-auto">
-                                            <span className="text-[10px] uppercase tracking-wider text-green-400 bg-green-900/20 px-3 py-1.5 rounded-sm border border-green-900/30 shadow-sm font-bold">Active</span>
+                            <div className="mt-20 text-center">
+                                <button className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors border-b border-stone-300 hover:border-stone-900 pb-1">
+                                    View Full Collection
+                                </button>
+                            </div>
+                        </section>
+
+                        {/* ─── FORGET-ME-NOT PREVIEW ─── */}
+                        <section className="bg-stone-900 text-stone-100 py-24 overflow-hidden">
+                            <div className="max-w-7xl mx-auto px-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                                    <div className="order-2 lg:order-1 relative">
+                                        <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full border border-stone-700/50"></div>
+                                        <div className="relative z-10">
+                                            <h2 className="text-4xl md:text-5xl font-serif leading-tight mb-6">
+                                                Never forget <br />
+                                                <span className="italic text-stone-400">a special moment.</span>
+                                            </h2>
+                                            <p className="text-stone-400 text-base leading-relaxed mb-8 font-light">
+                                                Life gets busy, but love shouldn't wait. With our <strong>Forget-Me-Not</strong> service, schedule recurring deliveries for anniversaries and birthdays. We'll remind you 3 days before, so you're always the hero.
+                                            </p>
+
+
+
+                                            <Link to="/profile" className="text-sm text-white font-medium hover:text-stone-300 flex items-center gap-2 group mt-8">
+                                                Manage your dates <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                            </Link>
                                         </div>
                                     </div>
 
-                                    <div className="space-y-4 mb-6">
-                                        <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden">
-                                            <div className="h-full bg-stone-500 w-3/4"></div>
+                                    {/* Right Column: Feature Showcase */}
+                                    {/* Right Column: Feature Showcase */}
+                                    <div className="order-1 lg:order-2 relative h-[400px] w-full flex items-center justify-center p-8">
+                                        {/* Decorative elements - subtle glow instead of box */}
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
+                                            <div className="w-64 h-64 bg-stone-700/30 rounded-full blur-3xl"></div>
                                         </div>
-                                        <div className="flex justify-between text-xs text-stone-500 font-medium tracking-wide">
-                                            <span>Reminder sent</span>
-                                            <span className="text-stone-300">3 days left</span>
+
+                                        {/* The Card */}
+                                        <div className="bg-stone-800 border border-stone-700 p-8 rounded-sm max-w-md w-full shadow-2xl relative z-10 transform transition-transform hover:scale-105 duration-500">
+                                            <div className="flex items-center gap-5 mb-6">
+                                                <div className="bg-stone-900 p-3 rounded-full text-stone-300 border border-stone-600">
+                                                    <Leaf size={24} />
+                                                </div>
+                                                <div>
+                                                    <p className="font-serif text-xl text-white">Wife's Birthday</p>
+                                                    <p className="text-xs text-stone-400 uppercase tracking-wider font-medium">February 14 • Yearly</p>
+                                                </div>
+                                                <div className="ml-auto">
+                                                    <span className="text-[10px] uppercase tracking-wider text-green-400 bg-green-900/20 px-3 py-1.5 rounded-sm border border-green-900/30 shadow-sm font-bold">Active</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-4 mb-6">
+                                                <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden">
+                                                    <div className="h-full bg-stone-500 w-3/4"></div>
+                                                </div>
+                                                <div className="flex justify-between text-xs text-stone-500 font-medium tracking-wide">
+                                                    <span>Reminder sent</span>
+                                                    <span className="text-stone-300">3 days left</span>
+                                                </div>
+                                            </div>
+
+                                            <p className="text-sm text-stone-400 italic border-l-2 border-stone-600 pl-4 py-1">"Automated order created. Pending approval."</p>
                                         </div>
                                     </div>
-
-                                    <p className="text-sm text-stone-400 italic border-l-2 border-stone-600 pl-4 py-1">"Automated order created. Pending approval."</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </section>
+                        </section>
 
-                {/* ─── NEWSLETTER ─── */}
-                <section className="py-24 border-b border-stone-200">
-                    <div className="max-w-xl mx-auto px-6 text-center">
-                        <Mail className="mx-auto mb-6 text-stone-400" size={24} strokeWidth={1.5} />
-                        <h3 className="text-2xl font-serif text-stone-900 mb-2">Floral Journal</h3>
-                        <p className="text-sm text-stone-500 mb-8">Decor inspiration and access to private sales.</p>
+                        {/* ─── NEWSLETTER ─── */}
+                        <section className="py-24 border-b border-stone-200">
+                            <div className="max-w-xl mx-auto px-6 text-center">
+                                <Mail className="mx-auto mb-6 text-stone-400" size={24} strokeWidth={1.5} />
+                                <h3 className="text-2xl font-serif text-stone-900 mb-2">Floral Journal</h3>
+                                <p className="text-sm text-stone-500 mb-8">Decor inspiration and access to private sales.</p>
 
-                        <form className="flex flex-col sm:flex-row gap-3">
-                            <input type="email" placeholder="your@email.com" className="flex-1 appearance-none bg-stone-50 border border-stone-200 rounded-sm px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-stone-400 focus:ring-1 focus:ring-stone-400 transition-all" />
-                            <button type="button" className="px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded-sm hover:bg-stone-800 transition-colors">
-                                Subscribe
-                            </button>
-                        </form>
-                        <p className="text-[10px] text-stone-400 mt-4">We respect your secret garden. No spam.</p>
-                    </div>
-                </section>
+                                <form className="flex flex-col sm:flex-row gap-3">
+                                    <input type="email" placeholder="your@email.com" className="flex-1 appearance-none bg-stone-50 border border-stone-200 rounded-sm px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-stone-400 focus:ring-1 focus:ring-stone-400 transition-all" />
+                                    <button type="button" className="px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded-sm hover:bg-stone-800 transition-colors">
+                                        Subscribe
+                                    </button>
+                                </form>
+                                <p className="text-[10px] text-stone-400 mt-4">We respect your secret garden. No spam.</p>
+                            </div>
+                        </section>
+                    </>
+                )}
             </main>
 
             {/* ─── FOOTER ─── */}

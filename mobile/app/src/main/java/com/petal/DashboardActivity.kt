@@ -24,6 +24,9 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var ivPopular2: ImageView
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var btnLogout: Button
+    
+    private lateinit var buyerContent: android.widget.LinearLayout
+    private lateinit var floristContent: android.widget.LinearLayout
 
     private lateinit var tokenManager: TokenManager
 
@@ -39,6 +42,10 @@ class DashboardActivity : AppCompatActivity() {
         ivPopular2 = findViewById(R.id.ivPopular2)
         bottomNav = findViewById(R.id.bottomNav)
         btnLogout = findViewById(R.id.btnLogout)
+        buyerContent = findViewById(R.id.buyerContent)
+        floristContent = findViewById(R.id.floristContent)
+
+        applyRoleUI(tokenManager.getRole())
 
         // Load placeholder image for avatar
         Glide.with(this)
@@ -72,6 +79,16 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+    private fun applyRoleUI(role: String?) {
+        if (role == "ROLE_FLORIST" || role == "artisan") {
+            buyerContent.visibility = android.view.View.GONE
+            floristContent.visibility = android.view.View.VISIBLE
+        } else {
+            buyerContent.visibility = android.view.View.VISIBLE
+            floristContent.visibility = android.view.View.GONE
+        }
+    }
+
     private fun fetchUserProfile() {
         val apiService = ApiClient.getClient(tokenManager)
 
@@ -83,6 +100,12 @@ class DashboardActivity : AppCompatActivity() {
                         val user = response.body()?.data
                         val firstName = user?.name?.split(" ")?.get(0) ?: "Customer"
                         tvWelcomeName.text = firstName
+                        
+                        val role = user?.role
+                        if (role != null) {
+                            tokenManager.saveRole(role)
+                            applyRoleUI(role)
+                        }
                     } else {
                         Toast.makeText(this@DashboardActivity, "Session expired.", Toast.LENGTH_SHORT).show()
                         forceLogoutLocally()

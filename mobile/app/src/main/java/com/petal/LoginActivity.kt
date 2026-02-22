@@ -68,8 +68,10 @@ class LoginActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful && response.body()?.success == true) {
                         val token = response.body()?.data?.token
+                        val role = response.body()?.data?.role
                         if (token != null) {
                             tokenManager.saveToken(token)
+                            if (role != null) tokenManager.saveRole(role)
                             Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
                             navigateToDashboard()
                         } else {

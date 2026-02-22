@@ -72,6 +72,13 @@
                     app:tint="@color/petal_stone_900" />
             </LinearLayout>
 
+            <!-- Buyer Content Container -->
+            <LinearLayout
+                android:id="@+id/buyerContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
             <!-- Active Order Card -->
             <TextView
                 android:layout_width="wrap_content"
@@ -257,6 +264,159 @@
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </HorizontalScrollView>
+            </LinearLayout>
+
+            <!-- Florist Content Container -->
+            <LinearLayout
+                android:id="@+id/floristContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                
+                <!-- Artisan Metrics -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today's Overview"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
+                    android:textColor="@color/petal_stone_900"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="24dp"
+                    android:weightSum="3">
+                    
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="@color/petal_stone_900"
+                        android:layout_marginEnd="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pending"
+                                android:textSize="12sp"
+                                android:textColor="@color/petal_stone_300"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="@color/petal_stone_200"
+                        android:layout_marginHorizontal="4dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/petal_stone_900"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Arranging"
+                                android:textSize="12sp"
+                                android:textColor="@color/petal_stone_500"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="@color/petal_stone_200"
+                        android:layout_marginStart="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="8"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/petal_stone_900"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Delivered"
+                                android:textSize="12sp"
+                                android:textColor="@color/petal_stone_500"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Requests"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
+                    android:textColor="@color/petal_stone_900"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Empty State for Orders -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    android:layout_marginBottom="32dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/bg_input"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@android:drawable/ic_menu_agenda"
+                            app:tint="@color/petal_stone_300"
+                            android:layout_marginBottom="8dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kanban Board view coming soon"
+                            android:textColor="@color/petal_stone_500"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
             
             <!-- Quick Action Logout Button to ensure user can still logout to test -->
             <Button

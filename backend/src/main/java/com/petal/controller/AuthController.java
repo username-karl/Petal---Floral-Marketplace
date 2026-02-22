@@ -37,12 +37,22 @@ public class AuthController {
                                                         .build());
                 }
 
+                // Map role
+                String userRole = "ROLE_BUYER"; // Default
+                if (request.getRole() != null) {
+                        if (request.getRole().equalsIgnoreCase("artisan")) {
+                                userRole = "ROLE_FLORIST";
+                        } else if (request.getRole().equalsIgnoreCase("customer")) {
+                                userRole = "ROLE_BUYER";
+                        }
+                }
+
                 // Create and save user with encrypted password
                 User user = User.builder()
                                 .name(request.getName())
                                 .email(request.getEmail())
                                 .password(passwordEncoder.encode(request.getPassword()))
-                                .role("ROLE_USER")
+                                .role(userRole)
                                 .build();
 
                 userRepository.save(user);

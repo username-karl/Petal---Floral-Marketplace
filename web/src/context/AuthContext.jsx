@@ -5,11 +5,11 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState({
-    name: "Developer",
-    email: "dev@petal.com",
-    role: "admin",
-    id: 1
-});
+        name: "Developer",
+        email: "dev@petal.com",
+        role: "admin",
+        id: 1
+    });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -50,8 +50,8 @@ export function AuthProvider({ children }) {
         return data;
     };
 
-    const register = async (name, email, password) => {
-        const response = await authAPI.register({ name, email, password });
+    const register = async (name, email, password, role) => {
+        const response = await authAPI.register({ name, email, password, role });
         return response.data;
     };
 

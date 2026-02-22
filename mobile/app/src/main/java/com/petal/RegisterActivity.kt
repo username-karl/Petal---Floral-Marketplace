@@ -20,6 +20,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var btnRegister: Button
     private lateinit var tvLogin: TextView
+    private lateinit var rgRole: android.widget.RadioGroup
     private lateinit var tokenManager: TokenManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         etName = findViewById(R.id.etName)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
+        rgRole = findViewById(R.id.rgRole)
         btnRegister = findViewById(R.id.btnRegister)
         tvLogin = findViewById(R.id.tvLogin)
 
@@ -43,8 +45,10 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            
+            val role = if (rgRole.checkedRadioButtonId == R.id.rbArtisan) "artisan" else "customer"
 
-            performRegistration(name, email, password)
+            performRegistration(name, email, password, role)
         }
 
         tvLogin.setOnClickListener {
@@ -52,11 +56,12 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun performRegistration(name: String, email: String, pass: String) {
+    private fun performRegistration(name: String, email: String, pass: String, role: String) {
         val requestBody = mapOf(
             "name" to name,
             "email" to email, 
-            "password" to pass
+            "password" to pass,
+            "role" to role
         )
         val apiService = ApiClient.getClient(tokenManager)
 
