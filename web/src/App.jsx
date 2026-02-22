@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import SellerCentre from './pages/SellerCentre';
 import SellerEducation from './pages/SellerEducation';
 import './index.css';
 
@@ -36,6 +37,14 @@ export default function App() {
                         element={
                             <ProtectedRoute>
                                 <SellerEducation />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/seller-centre"
+                        element={
+                            <ProtectedRoute>
+                                <SellerCentre />
                             </ProtectedRoute>
                         }
                     />

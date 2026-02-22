@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import {
     Menu, Search, ShoppingBag, ArrowRight, Star, Flower2,
     Package, Clock, Check, Plus, Mail, Instagram, Facebook,
-    Linkedin, X, LogOut, User, Settings, ChevronDown, Leaf
+    Linkedin, X, LogOut, User, Settings, ChevronDown, Leaf, Store
 } from 'lucide-react';
 import KpiCard from '../components/KpiCard';
 import ProductCard from '../components/ProductCard';
@@ -117,12 +117,24 @@ export default function Dashboard() {
                                             <p className="text-xs text-stone-500 mt-0.5">{user?.email}</p>
                                         </div>
                                         <div className="py-1">
+                                            {isArtisan && (
+                                                <>
+                                                    <Link to="/seller-centre" className="flex items-center gap-3 w-full px-5 py-2.5 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors">
+                                                        <Store size={16} /> Seller Centre
+                                                    </Link>
+                                                    <Link to="/seller-centre?tab=shopInfo" className="flex items-center gap-3 w-full px-5 py-2.5 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors">
+                                                        <Settings size={16} /> Shop Information
+                                                    </Link>
+                                                </>
+                                            )}
                                             <Link to="/profile" className="flex items-center gap-3 w-full px-5 py-2.5 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors">
                                                 <User size={16} /> Profile
                                             </Link>
-                                            <button className="flex items-center gap-3 w-full px-5 py-2.5 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors">
-                                                <Settings size={16} /> Settings
-                                            </button>
+                                            {!isArtisan && (
+                                                <button className="flex items-center gap-3 w-full px-5 py-2.5 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors">
+                                                    <Settings size={16} /> Settings
+                                                </button>
+                                            )}
                                         </div>
                                         <div className="border-t border-stone-100 pt-1">
                                             <button

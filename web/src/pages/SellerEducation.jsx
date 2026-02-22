@@ -24,7 +24,7 @@ export default function SellerEducation() {
                         Petal
                     </Link>
                     <div className="flex items-center gap-6">
-                        <Link to="/profile" className="text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors">
+                        <Link to="/seller-centre" className="text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors">
                             Seller Centre
                         </Link>
                         <Link to="/dashboard" className="text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors">
