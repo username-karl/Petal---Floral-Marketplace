@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, ArrowRight, User, Package } from 'lucide-react';
+import { Leaf, User, Package } from 'lucide-react';
+import FormInput from '../components/FormInput';
+import PrimaryButton from '../components/PrimaryButton';
 
 export default function Register() {
     const { register } = useAuth();
@@ -76,41 +78,32 @@ export default function Register() {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-5">
-                        <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-wider text-stone-500 font-medium">Full Name</label>
-                            <input
-                                type="text"
-                                required
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-full bg-white border border-stone-200 rounded-sm px-4 py-3 text-stone-900 placeholder:text-stone-300 focus:outline-none focus:border-stone-900 transition-colors"
-                                placeholder="Jardinier Parisien"
-                            />
-                        </div>
+                        <FormInput
+                            label="Full Name"
+                            type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            placeholder="Jardinier Parisien"
+                            required
+                        />
 
-                        <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-wider text-stone-500 font-medium">Email Address</label>
-                            <input
-                                type="email"
-                                required
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="w-full bg-white border border-stone-200 rounded-sm px-4 py-3 text-stone-900 placeholder:text-stone-300 focus:outline-none focus:border-stone-900 transition-colors"
-                                placeholder="name@example.com"
-                            />
-                        </div>
+                        <FormInput
+                            label="Email Address"
+                            type="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            placeholder="name@example.com"
+                            required
+                        />
 
-                        <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-wider text-stone-500 font-medium">Password</label>
-                            <input
-                                type="password"
-                                required
-                                value={formData.password}
-                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                className="w-full bg-white border border-stone-200 rounded-sm px-4 py-3 text-stone-900 placeholder:text-stone-300 focus:outline-none focus:border-stone-900 transition-colors"
-                                placeholder="••••••••"
-                            />
-                        </div>
+                        <FormInput
+                            label="Password"
+                            type="password"
+                            value={formData.password}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            placeholder="••••••••"
+                            required
+                        />
 
                         <div className="space-y-2 pt-2">
                             <label className="text-xs uppercase tracking-wider text-stone-500 font-medium mb-2 block">I am a...</label>
@@ -142,14 +135,9 @@ export default function Register() {
                             </div>
                         </div>
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full bg-stone-900 text-white h-12 rounded-sm font-medium hover:bg-stone-800 transition-all disabled:opacity-70 flex items-center justify-center gap-2 group mt-6"
-                        >
-                            {loading ? 'Creating Account...' : 'Create Account'}
-                            {!loading && <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />}
-                        </button>
+                        <PrimaryButton type="submit" loading={loading} loadingText="Creating Account..." className="mt-6">
+                            Create Account
+                        </PrimaryButton>
                     </form>
 
                     <div className="mt-10 pt-8 border-t border-stone-100 text-center">

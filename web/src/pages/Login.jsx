@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, ArrowRight } from 'lucide-react';
+import { Leaf } from 'lucide-react';
+import FormInput from '../components/FormInput';
+import PrimaryButton from '../components/PrimaryButton';
 
 export default function Login() {
     const { login } = useAuth();
@@ -50,41 +52,30 @@ export default function Login() {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-wider text-stone-500 font-medium">Email Address</label>
-                            <input
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-white border border-stone-200 rounded-sm px-4 py-3 text-stone-900 placeholder:text-stone-300 focus:outline-none focus:border-stone-900 transition-colors"
-                                placeholder="name@example.com"
-                            />
-                        </div>
+                        <FormInput
+                            label="Email Address"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="name@example.com"
+                            required
+                        />
 
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                                <label className="text-xs uppercase tracking-wider text-stone-500 font-medium">Password</label>
+                        <FormInput
+                            label="Password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            required
+                            extraLabel={
                                 <a href="#" className="text-xs text-stone-400 hover:text-stone-900 transition-colors">Forgot password?</a>
-                            </div>
-                            <input
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-white border border-stone-200 rounded-sm px-4 py-3 text-stone-900 placeholder:text-stone-300 focus:outline-none focus:border-stone-900 transition-colors"
-                                placeholder="••••••••"
-                            />
-                        </div>
+                            }
+                        />
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full bg-stone-900 text-white h-12 rounded-sm font-medium hover:bg-stone-800 transition-all disabled:opacity-70 flex items-center justify-center gap-2 group"
-                        >
-                            {loading ? 'Signing in...' : 'Sign In'}
-                            {!loading && <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />}
-                        </button>
+                        <PrimaryButton type="submit" loading={loading} loadingText="Signing in...">
+                            Sign In
+                        </PrimaryButton>
                     </form>
 
                     <div className="mt-12 pt-8 border-t border-stone-100 text-center">

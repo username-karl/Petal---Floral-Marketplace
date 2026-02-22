@@ -6,6 +6,8 @@ import {
     Package, Clock, Check, Plus, Mail, Instagram, Facebook,
     Linkedin, X, LogOut, User, Settings, ChevronDown, Leaf
 } from 'lucide-react';
+import KpiCard from '../components/KpiCard';
+import ProductCard from '../components/ProductCard';
 
 export default function Dashboard() {
     const { user, logout } = useAuth();
@@ -128,27 +130,9 @@ export default function Dashboard() {
                             <p className="text-stone-500 text-base font-light">Manage your floral creations and orders.</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="bg-white p-8 border border-stone-200 rounded-sm hover:border-stone-400 transition-colors cursor-pointer group">
-                                <h3 className="font-serif text-xl mb-4 text-stone-900 flex justify-between items-center">
-                                    Pending Orders
-                                    <ArrowRight size={16} className="text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all" />
-                                </h3>
-                                <p className="text-4xl font-light text-stone-600">3</p>
-                            </div>
-                            <div className="bg-white p-8 border border-stone-200 rounded-sm hover:border-stone-400 transition-colors cursor-pointer group">
-                                <h3 className="font-serif text-xl mb-4 text-stone-900 flex justify-between items-center">
-                                    Arranging
-                                    <ArrowRight size={16} className="text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all" />
-                                </h3>
-                                <p className="text-4xl font-light text-stone-600">1</p>
-                            </div>
-                            <div className="bg-white p-8 border border-stone-200 rounded-sm hover:border-stone-400 transition-colors cursor-pointer group">
-                                <h3 className="font-serif text-xl mb-4 text-stone-900 flex justify-between items-center">
-                                    Delivered today
-                                    <ArrowRight size={16} className="text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all" />
-                                </h3>
-                                <p className="text-4xl font-light text-stone-600">12</p>
-                            </div>
+                            <KpiCard title="Pending Orders" value="3" />
+                            <KpiCard title="Arranging" value="1" />
+                            <KpiCard title="Delivered today" value="12" />
                         </div>
                         <div className="mt-12 bg-white border border-stone-200 rounded-sm overflow-hidden">
                             <div className="px-6 py-4 border-b border-stone-200 bg-[#FDFCF8] flex justify-between items-center">
@@ -239,35 +223,7 @@ export default function Dashboard() {
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
                                 {products.map((product) => (
-                                    <div key={product.id} className="group cursor-pointer">
-                                        <div className="relative aspect-[4/5] overflow-hidden bg-stone-100 mb-4 rounded-sm">
-                                            <img
-                                                src={product.image}
-                                                alt={product.name}
-                                                className="w-full h-full object-cover image-hover-zoom"
-                                            />
-                                            <div className="absolute bottom-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                                                <button className="bg-white/90 backdrop-blur text-stone-900 p-3 rounded-full shadow-sm hover:bg-stone-900 hover:text-white transition-colors">
-                                                    <Plus size={20} strokeWidth={1.5} />
-                                                </button>
-                                            </div>
-                                            {product.tag && (
-                                                <div className="absolute top-4 left-4 bg-stone-900 text-white text-[10px] uppercase font-bold px-2 py-1 tracking-wider">
-                                                    {product.tag}
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="flex justify-between items-start">
-                                            <div>
-                                                <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">{product.artisan}</p>
-                                                <h3 className="text-lg font-serif font-medium text-stone-900 leading-none mb-1 group-hover:underline decoration-stone-300 underline-offset-4">
-                                                    {product.name}
-                                                </h3>
-                                                <p className="text-xs text-stone-500">{product.subtitle}</p>
-                                            </div>
-                                            <span className="text-sm font-medium text-stone-900">{product.price}</span>
-                                        </div>
-                                    </div>
+                                    <ProductCard key={product.id} product={product} />
                                 ))}
                             </div>
 
