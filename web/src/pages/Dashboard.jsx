@@ -68,7 +68,7 @@ export default function Dashboard() {
                     <nav className="hidden lg:flex gap-8 items-center absolute left-1/2 transform -translate-x-1/2">
                         {isArtisan ? (
                             <>
-                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Seller Education</button>
+                                <Link to="/seller-education" className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Seller Education</Link>
                                 <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Marketing Centre</button>
                                 <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Help Centre</button>
                             </>
@@ -141,424 +141,170 @@ export default function Dashboard() {
             </header>
 
             <main className="pt-20">
-                {isArtisan ? (
-                    <div className="max-w-7xl mx-auto px-6 py-12 min-h-[80vh]">
-                        <div className="mb-8 flex justify-between items-end">
-                            <div>
-                                <h1 className="text-3xl font-serif text-stone-900">Seller Centre</h1>
-                                <p className="text-stone-500 text-sm mt-1">Manage your shop, products, and orders.</p>
+                {/* ─── HERO SECTION ─── */}
+                <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+                    {/* Background Image */}
+                    <div className="absolute inset-0 z-0">
+                        <img
+                            src="https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=2576&auto=format&fit=crop"
+                            alt="Artistic Dried Flowers"
+                            className="w-full h-full object-cover object-center opacity-90 grayscale-[20%]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-transparent opacity-90"></div>
+                    </div>
+
+                    <div className="relative z-10 text-center max-w-4xl px-6 mt-20">
+                        <span className="block text-xs uppercase tracking-[0.2em] text-stone-600 mb-4 animate-fadeIn">Timeless Collection</span>
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-stone-900 leading-[0.9] tracking-tight mb-8">
+                            The art of <br />
+                            <span className="italic text-stone-600">nature preserved</span>
+                        </h1>
+                        <p className="text-base md:text-lg text-stone-700 max-w-lg mx-auto mb-10 font-light leading-relaxed">
+                            Sustainable floral creations, sculpted by time. A raw and poetic aesthetic to elevate your interior without ever fading away.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <a href="#collection" className="group relative px-8 py-3 bg-stone-900 text-stone-50 text-sm font-medium overflow-hidden rounded-sm transition-all hover:bg-stone-800 hover:shadow-lg">
+                                <span className="relative z-10 flex items-center gap-2">
+                                    Explore Collection
+                                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ─── MARQUEE ─── */}
+                <div className="border-y border-stone-200 py-4 bg-white overflow-hidden">
+                    <div className="flex whitespace-nowrap gap-12 animate-marquee items-center opacity-60 hover:opacity-100 transition-opacity">
+                        {[...Array(2)].map((_, i) => (
+                            <div key={i} className="flex gap-12">
+                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Star size={12} /> Handmade in Paris</div>
+                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Flower2 size={12} /> 100% Natural Flowers</div>
+                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Package size={12} /> Zero Plastic Packaging</div>
+                                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Clock size={12} /> Lasts 2+ Years</div>
                             </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* ─── COLLECTION GRID ─── */}
+                <section id="collection" className="max-w-7xl mx-auto px-6 py-24">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                        <div>
+                            <h2 className="text-3xl md:text-4xl font-serif text-stone-900 tracking-tight mb-2">Seasonal Selection</h2>
+                            <p className="text-stone-500 text-sm font-light">Autumn / Winter 2026</p>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                            {/* SIDEBAR */}
-                            <aside className="lg:col-span-3">
-                                <div className="bg-white border border-stone-200 rounded-sm p-4 sticky top-24">
-                                    <div className="mb-6">
-                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Dashboard</h3>
-                                        <ul className="space-y-1">
-                                            <li>
-                                                <button onClick={() => setArtisanTab('overview')} className={`w-full text-left px-3 py-2 text-sm rounded-sm transition-colors ${artisanTab === 'overview' ? 'bg-stone-100 text-stone-900 font-medium' : 'text-stone-600 hover:bg-stone-50'}`}>Overview</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="mb-6">
-                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Orders</h3>
-                                        <ul className="space-y-1">
-                                            <li><button onClick={() => setArtisanTab('orders')} className={`w-full text-left px-3 py-2 text-sm rounded-sm transition-colors ${artisanTab === 'orders' ? 'bg-stone-100 text-stone-900 font-medium' : 'text-stone-600 hover:bg-stone-50'}`}>My Orders</button></li>
-                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Cancellations</button></li>
-                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Return / Refund</button></li>
-                                        </ul>
-                                    </div>
-                                    <div className="mb-6">
-                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Products</h3>
-                                        <ul className="space-y-1">
-                                            <li><button onClick={() => setArtisanTab('products')} className={`w-full text-left px-3 py-2 text-sm rounded-sm transition-colors ${artisanTab === 'products' ? 'bg-stone-100 text-stone-900 font-medium' : 'text-stone-600 hover:bg-stone-50'}`}>My Products</button></li>
-                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Add New Product</button></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Finance</h3>
-                                        <ul className="space-y-1">
-                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">My Income</button></li>
-                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Bank Accounts</button></li>
-                                        </ul>
-                                    </div>
+                        <div className="flex gap-6 border-b border-stone-200 pb-2">
+                            <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" className="hidden" />
+                                <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
+                                    <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
                                 </div>
-                            </aside>
+                                <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">In Stock</span>
+                            </label>
+                            <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" className="hidden" defaultChecked />
+                                <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
+                                    <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
+                                </div>
+                                <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">New Arrivals</span>
+                            </label>
+                        </div>
+                    </div>
 
-                            {/* MAIN CONTENT */}
-                            <div className="lg:col-span-9 space-y-6">
-                                {artisanTab === 'overview' && (
-                                    <>
-                                        {/* To Do List */}
-                                        <div className="bg-white border border-stone-200 rounded-sm p-6">
-                                            <h3 className="text-lg font-serif text-stone-900 mb-6 font-medium">To Do List</h3>
-                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                                                <div className="text-center group cursor-pointer">
-                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">0</p>
-                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">Unpaid</p>
-                                                </div>
-                                                <div className="text-center group cursor-pointer border-l border-stone-100">
-                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">3</p>
-                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">To Process Shipment</p>
-                                                </div>
-                                                <div className="text-center group cursor-pointer border-l border-stone-100">
-                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">0</p>
-                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">Pending Return</p>
-                                                </div>
-                                                <div className="text-center group cursor-pointer border-l border-stone-100">
-                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">1</p>
-                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">Sold Out</p>
-                                                </div>
-                                            </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
+                        {products.map((product) => (
+                            <ProductCard key={product.id} product={product} />
+                        ))}
+                    </div>
+
+                    <div className="mt-20 text-center">
+                        <button className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors border-b border-stone-300 hover:border-stone-900 pb-1">
+                            View Full Collection
+                        </button>
+                    </div>
+                </section>
+
+                {/* ─── FORGET-ME-NOT PREVIEW ─── */}
+                <section className="bg-stone-900 text-stone-100 py-24 overflow-hidden">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                            <div className="order-2 lg:order-1 relative">
+                                <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full border border-stone-700/50"></div>
+                                <div className="relative z-10">
+                                    <h2 className="text-4xl md:text-5xl font-serif leading-tight mb-6">
+                                        Never forget <br />
+                                        <span className="italic text-stone-400">a special moment.</span>
+                                    </h2>
+                                    <p className="text-stone-400 text-base leading-relaxed mb-8 font-light">
+                                        Life gets busy, but love shouldn't wait. With our <strong>Forget-Me-Not</strong> service, schedule recurring deliveries for anniversaries and birthdays. We'll remind you 3 days before, so you're always the hero.
+                                    </p>
+
+
+
+                                    <Link to="/profile" className="text-sm text-white font-medium hover:text-stone-300 flex items-center gap-2 group mt-8">
+                                        Manage your dates <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* Right Column: Feature Showcase */}
+                            {/* Right Column: Feature Showcase */}
+                            <div className="order-1 lg:order-2 relative h-[400px] w-full flex items-center justify-center p-8">
+                                {/* Decorative elements - subtle glow instead of box */}
+                                <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
+                                    <div className="w-64 h-64 bg-stone-700/30 rounded-full blur-3xl"></div>
+                                </div>
+
+                                {/* The Card */}
+                                <div className="bg-stone-800 border border-stone-700 p-8 rounded-sm max-w-md w-full shadow-2xl relative z-10 transform transition-transform hover:scale-105 duration-500">
+                                    <div className="flex items-center gap-5 mb-6">
+                                        <div className="bg-stone-900 p-3 rounded-full text-stone-300 border border-stone-600">
+                                            <Leaf size={24} />
                                         </div>
-
-                                        {/* Business Insights */}
-                                        <div className="bg-white border border-stone-200 rounded-sm p-6">
-                                            <div className="flex justify-between items-center mb-6">
-                                                <h3 className="text-lg font-serif text-stone-900 font-medium">Business Insights</h3>
-                                                <button className="text-xs text-stone-500 hover:text-stone-900 flex items-center gap-1 transition-colors">More <ArrowRight size={14} /></button>
-                                            </div>
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                                <KpiCard title="Visitors" value="124" />
-                                                <KpiCard title="Page Views" value="459" />
-                                                <KpiCard title="Orders" value="4" />
-                                            </div>
+                                        <div>
+                                            <p className="font-serif text-xl text-white">Wife's Birthday</p>
+                                            <p className="text-xs text-stone-400 uppercase tracking-wider font-medium">February 14 • Yearly</p>
                                         </div>
-                                    </>
-                                )}
-
-                                {artisanTab === 'orders' && (
-                                    <div className="bg-white border border-stone-200 rounded-sm">
-                                        <div className="border-b border-stone-200">
-                                            <nav className="flex px-2 overflow-x-auto" aria-label="Tabs">
-                                                {['All', 'Unpaid', 'To Ship', 'Shipping', 'Completed', 'Cancelled'].map((tab) => (
-                                                    <button
-                                                        key={tab}
-                                                        onClick={() => setOrderTab(tab.toLowerCase())}
-                                                        className={`whitespace-nowrap py-4 px-6 text-sm font-medium border-b-2 transition-colors ${orderTab === tab.toLowerCase()
-                                                            ? 'border-stone-900 text-stone-900'
-                                                            : 'border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300'
-                                                            }`}
-                                                    >
-                                                        {tab}
-                                                    </button>
-                                                ))}
-                                            </nav>
-                                        </div>
-                                        <div className="p-6">
-                                            <div className="flex gap-4 mb-6">
-                                                <div className="flex-1 relative">
-                                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={16} />
-                                                    <input type="text" placeholder="Search Order ID or Buyer Name" className="w-full pl-10 pr-4 py-2 text-sm border border-stone-200 rounded-sm focus:outline-none focus:border-stone-400 bg-stone-50" />
-                                                </div>
-                                                <button className="px-4 py-2 bg-stone-900 text-white text-sm font-medium rounded-sm hover:bg-stone-800 transition-colors">Search</button>
-                                            </div>
-
-                                            {/* Orders Table */}
-                                            <div className="overflow-x-auto">
-                                                <table className="w-full text-sm text-left">
-                                                    <thead className="text-xs text-stone-500 uppercase bg-stone-50 border-y border-stone-200">
-                                                        <tr>
-                                                            <th className="px-4 py-3 font-medium">Products</th>
-                                                            <th className="px-4 py-3 font-medium text-center">Total Price</th>
-                                                            <th className="px-4 py-3 font-medium text-center">Status</th>
-                                                            <th className="px-4 py-3 font-medium text-center">Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr className="border-b border-stone-100">
-                                                            <td className="px-4 py-4 min-w-[250px]">
-                                                                <div className="flex gap-3 items-start">
-                                                                    <img src={products[0].image} className="w-12 h-12 object-cover border border-stone-200 rounded-sm flex-shrink-0" alt="" />
-                                                                    <div>
-                                                                        <p className="text-stone-900 font-medium">{products[0].name}</p>
-                                                                        <p className="text-stone-500 text-xs">x1</p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-4 py-4 text-center font-medium text-stone-900 whitespace-nowrap">{products[0].price}</td>
-                                                            <td className="px-4 py-4 text-center">
-                                                                <span className="bg-amber-100 text-amber-800 text-[10px] uppercase font-bold px-2 py-1 rounded-sm whitespace-nowrap">To Ship</span>
-                                                            </td>
-                                                            <td className="px-4 py-4 text-center">
-                                                                <button className="text-sm text-stone-600 border border-stone-300 px-3 py-1.5 rounded-sm hover:bg-stone-50 transition-colors whitespace-nowrap">Arrange Shipment</button>
-                                                            </td>
-                                                        </tr>
-                                                        <tr className="border-b border-stone-100">
-                                                            <td className="px-4 py-4 min-w-[250px]">
-                                                                <div className="flex gap-3 items-start">
-                                                                    <img src={products[3].image} className="w-12 h-12 object-cover border border-stone-200 rounded-sm flex-shrink-0" alt="" />
-                                                                    <div>
-                                                                        <p className="text-stone-900 font-medium">{products[3].name}</p>
-                                                                        <p className="text-stone-500 text-xs">x2</p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-4 py-4 text-center font-medium text-stone-900 whitespace-nowrap">$110</td>
-                                                            <td className="px-4 py-4 text-center">
-                                                                <span className="bg-blue-100 text-blue-800 text-[10px] uppercase font-bold px-2 py-1 rounded-sm whitespace-nowrap">Shipping</span>
-                                                            </td>
-                                                            <td className="px-4 py-4 text-center">
-                                                                <button className="text-sm text-stone-600 hover:text-stone-900 transition-colors border-b border-stone-300 hover:border-stone-900 pb-0.5 whitespace-nowrap">Check Logistics</button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <div className="ml-auto">
+                                            <span className="text-[10px] uppercase tracking-wider text-green-400 bg-green-900/20 px-3 py-1.5 rounded-sm border border-green-900/30 shadow-sm font-bold">Active</span>
                                         </div>
                                     </div>
-                                )}
 
-                                {artisanTab === 'products' && (
-                                    <div className="bg-white border border-stone-200 rounded-sm">
-                                        <div className="border-b border-stone-200 flex flex-col sm:flex-row justify-between sm:items-center pr-6 gap-4 sm:gap-0">
-                                            <nav className="flex px-2 overflow-x-auto" aria-label="Tabs">
-                                                {['All', 'Live', 'Sold Out', 'Reviewing', 'Violation'].map((tab) => (
-                                                    <button
-                                                        key={tab}
-                                                        onClick={() => setProductTab(tab.toLowerCase())}
-                                                        className={`whitespace-nowrap py-4 px-6 text-sm font-medium border-b-2 transition-colors ${productTab === tab.toLowerCase()
-                                                            ? 'border-stone-900 text-stone-900'
-                                                            : 'border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300'
-                                                            }`}
-                                                    >
-                                                        {tab} {tab === 'Live' && '(5)'} {tab === 'Sold Out' && '(1)'}
-                                                    </button>
-                                                ))}
-                                            </nav>
-                                            <div className="px-6 pb-4 sm:p-0 sm:pl-4 self-start sm:self-center">
-                                                <button className="flex items-center gap-2 bg-stone-900 text-white px-4 py-2 rounded-sm text-sm font-medium hover:bg-stone-800 transition-colors whitespace-nowrap">
-                                                    <Plus size={16} /> Add New Product
-                                                </button>
-                                            </div>
+                                    <div className="space-y-4 mb-6">
+                                        <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden">
+                                            <div className="h-full bg-stone-500 w-3/4"></div>
                                         </div>
-                                        <div className="p-6">
-                                            <div className="flex gap-4 mb-6">
-                                                <div className="flex-1 relative">
-                                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={16} />
-                                                    <input type="text" placeholder="Search product name or SKU" className="w-full pl-10 pr-4 py-2 text-sm border border-stone-200 rounded-sm focus:outline-none focus:border-stone-400 bg-stone-50" />
-                                                </div>
-                                                <button className="px-4 py-2 bg-stone-100 text-stone-900 border border-stone-200 text-sm font-medium rounded-sm hover:bg-stone-200 transition-colors whitespace-nowrap">Category <ChevronDown size={14} className="inline ml-1" /></button>
-                                            </div>
-
-                                            {/* Products Table */}
-                                            <div className="overflow-x-auto">
-                                                <table className="w-full text-sm text-left">
-                                                    <thead className="text-xs text-stone-500 uppercase bg-stone-50 border-y border-stone-200">
-                                                        <tr>
-                                                            <th className="px-4 py-3 font-medium">Product Name</th>
-                                                            <th className="px-4 py-3 font-medium text-center">Price</th>
-                                                            <th className="px-4 py-3 font-medium text-center">Stock</th>
-                                                            <th className="px-4 py-3 font-medium text-center">Sales</th>
-                                                            <th className="px-4 py-3 font-medium text-center">Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {products.map((product) => (
-                                                            <tr key={product.id} className="border-b border-stone-100 hover:bg-stone-50/50 transition-colors">
-                                                                <td className="px-4 py-4 min-w-[250px]">
-                                                                    <div className="flex gap-3 items-start">
-                                                                        <img src={product.image} className="w-12 h-12 object-cover border border-stone-200 rounded-sm flex-shrink-0" alt="" />
-                                                                        <div>
-                                                                            <p className="text-stone-900 font-medium line-clamp-2">{product.name}</p>
-                                                                            <p className="text-stone-500 text-xs mt-1 border border-stone-200 inline-block px-1 bg-white">SKU: {product.name.substring(0, 3).toUpperCase()}-00{product.id}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td className="px-4 py-4 text-center font-medium text-stone-900 whitespace-nowrap">{product.price}</td>
-                                                                <td className="px-4 py-4 text-center">
-                                                                    {product.id === 2 ? <span className="text-red-500 font-medium">0</span> : <span className="text-stone-900">{Math.floor(Math.random() * 50) + 5}</span>}
-                                                                </td>
-                                                                <td className="px-4 py-4 text-center text-stone-500">
-                                                                    {Math.floor(Math.random() * 20)}
-                                                                </td>
-                                                                <td className="px-4 py-4 text-center">
-                                                                    <div className="flex items-center justify-center gap-3">
-                                                                        <button className="text-sm text-stone-600 hover:text-stone-900 transition-colors font-medium">Edit</button>
-                                                                        <button className="text-sm text-stone-400 hover:text-stone-900 transition-colors">More</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <div className="flex justify-between text-xs text-stone-500 font-medium tracking-wide">
+                                            <span>Reminder sent</span>
+                                            <span className="text-stone-300">3 days left</span>
                                         </div>
                                     </div>
-                                )}
+
+                                    <p className="text-sm text-stone-400 italic border-l-2 border-stone-600 pl-4 py-1">"Automated order created. Pending approval."</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <>
-                        {/* ─── HERO SECTION ─── */}
-                        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-                            {/* Background Image */}
-                            <div className="absolute inset-0 z-0">
-                                <img
-                                    src="https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=2576&auto=format&fit=crop"
-                                    alt="Artistic Dried Flowers"
-                                    className="w-full h-full object-cover object-center opacity-90 grayscale-[20%]"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-transparent opacity-90"></div>
-                            </div>
+                </section>
 
-                            <div className="relative z-10 text-center max-w-4xl px-6 mt-20">
-                                <span className="block text-xs uppercase tracking-[0.2em] text-stone-600 mb-4 animate-fadeIn">Timeless Collection</span>
-                                <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-stone-900 leading-[0.9] tracking-tight mb-8">
-                                    The art of <br />
-                                    <span className="italic text-stone-600">nature preserved</span>
-                                </h1>
-                                <p className="text-base md:text-lg text-stone-700 max-w-lg mx-auto mb-10 font-light leading-relaxed">
-                                    Sustainable floral creations, sculpted by time. A raw and poetic aesthetic to elevate your interior without ever fading away.
-                                </p>
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                                    <a href="#collection" className="group relative px-8 py-3 bg-stone-900 text-stone-50 text-sm font-medium overflow-hidden rounded-sm transition-all hover:bg-stone-800 hover:shadow-lg">
-                                        <span className="relative z-10 flex items-center gap-2">
-                                            Explore Collection
-                                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </section>
+                {/* ─── NEWSLETTER ─── */}
+                <section className="py-24 border-b border-stone-200">
+                    <div className="max-w-xl mx-auto px-6 text-center">
+                        <Mail className="mx-auto mb-6 text-stone-400" size={24} strokeWidth={1.5} />
+                        <h3 className="text-2xl font-serif text-stone-900 mb-2">Floral Journal</h3>
+                        <p className="text-sm text-stone-500 mb-8">Decor inspiration and access to private sales.</p>
 
-                        {/* ─── MARQUEE ─── */}
-                        <div className="border-y border-stone-200 py-4 bg-white overflow-hidden">
-                            <div className="flex whitespace-nowrap gap-12 animate-marquee items-center opacity-60 hover:opacity-100 transition-opacity">
-                                {[...Array(2)].map((_, i) => (
-                                    <div key={i} className="flex gap-12">
-                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Star size={12} /> Handmade in Paris</div>
-                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Flower2 size={12} /> 100% Natural Flowers</div>
-                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Package size={12} /> Zero Plastic Packaging</div>
-                                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500"><Clock size={12} /> Lasts 2+ Years</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* ─── COLLECTION GRID ─── */}
-                        <section id="collection" className="max-w-7xl mx-auto px-6 py-24">
-                            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                                <div>
-                                    <h2 className="text-3xl md:text-4xl font-serif text-stone-900 tracking-tight mb-2">Seasonal Selection</h2>
-                                    <p className="text-stone-500 text-sm font-light">Autumn / Winter 2026</p>
-                                </div>
-
-                                <div className="flex gap-6 border-b border-stone-200 pb-2">
-                                    <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
-                                        <input type="checkbox" className="hidden" />
-                                        <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
-                                            <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
-                                        </div>
-                                        <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">In Stock</span>
-                                    </label>
-                                    <label className="custom-checkbox flex items-center gap-2 cursor-pointer group">
-                                        <input type="checkbox" className="hidden" defaultChecked />
-                                        <div className="w-4 h-4 border border-stone-300 rounded-sm flex items-center justify-center transition-colors group-hover:border-stone-500 bg-white">
-                                            <Check size={10} className="text-stone-900 hidden" strokeWidth={3} />
-                                        </div>
-                                        <span className="text-xs font-medium text-stone-600 uppercase tracking-wide">New Arrivals</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
-                                {products.map((product) => (
-                                    <ProductCard key={product.id} product={product} />
-                                ))}
-                            </div>
-
-                            <div className="mt-20 text-center">
-                                <button className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors border-b border-stone-300 hover:border-stone-900 pb-1">
-                                    View Full Collection
-                                </button>
-                            </div>
-                        </section>
-
-                        {/* ─── FORGET-ME-NOT PREVIEW ─── */}
-                        <section className="bg-stone-900 text-stone-100 py-24 overflow-hidden">
-                            <div className="max-w-7xl mx-auto px-6">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                                    <div className="order-2 lg:order-1 relative">
-                                        <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full border border-stone-700/50"></div>
-                                        <div className="relative z-10">
-                                            <h2 className="text-4xl md:text-5xl font-serif leading-tight mb-6">
-                                                Never forget <br />
-                                                <span className="italic text-stone-400">a special moment.</span>
-                                            </h2>
-                                            <p className="text-stone-400 text-base leading-relaxed mb-8 font-light">
-                                                Life gets busy, but love shouldn't wait. With our <strong>Forget-Me-Not</strong> service, schedule recurring deliveries for anniversaries and birthdays. We'll remind you 3 days before, so you're always the hero.
-                                            </p>
-
-
-
-                                            <Link to="/profile" className="text-sm text-white font-medium hover:text-stone-300 flex items-center gap-2 group mt-8">
-                                                Manage your dates <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                            </Link>
-                                        </div>
-                                    </div>
-
-                                    {/* Right Column: Feature Showcase */}
-                                    {/* Right Column: Feature Showcase */}
-                                    <div className="order-1 lg:order-2 relative h-[400px] w-full flex items-center justify-center p-8">
-                                        {/* Decorative elements - subtle glow instead of box */}
-                                        <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
-                                            <div className="w-64 h-64 bg-stone-700/30 rounded-full blur-3xl"></div>
-                                        </div>
-
-                                        {/* The Card */}
-                                        <div className="bg-stone-800 border border-stone-700 p-8 rounded-sm max-w-md w-full shadow-2xl relative z-10 transform transition-transform hover:scale-105 duration-500">
-                                            <div className="flex items-center gap-5 mb-6">
-                                                <div className="bg-stone-900 p-3 rounded-full text-stone-300 border border-stone-600">
-                                                    <Leaf size={24} />
-                                                </div>
-                                                <div>
-                                                    <p className="font-serif text-xl text-white">Wife's Birthday</p>
-                                                    <p className="text-xs text-stone-400 uppercase tracking-wider font-medium">February 14 • Yearly</p>
-                                                </div>
-                                                <div className="ml-auto">
-                                                    <span className="text-[10px] uppercase tracking-wider text-green-400 bg-green-900/20 px-3 py-1.5 rounded-sm border border-green-900/30 shadow-sm font-bold">Active</span>
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-4 mb-6">
-                                                <div className="h-2 w-full bg-stone-900 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-stone-500 w-3/4"></div>
-                                                </div>
-                                                <div className="flex justify-between text-xs text-stone-500 font-medium tracking-wide">
-                                                    <span>Reminder sent</span>
-                                                    <span className="text-stone-300">3 days left</span>
-                                                </div>
-                                            </div>
-
-                                            <p className="text-sm text-stone-400 italic border-l-2 border-stone-600 pl-4 py-1">"Automated order created. Pending approval."</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* ─── NEWSLETTER ─── */}
-                        <section className="py-24 border-b border-stone-200">
-                            <div className="max-w-xl mx-auto px-6 text-center">
-                                <Mail className="mx-auto mb-6 text-stone-400" size={24} strokeWidth={1.5} />
-                                <h3 className="text-2xl font-serif text-stone-900 mb-2">Floral Journal</h3>
-                                <p className="text-sm text-stone-500 mb-8">Decor inspiration and access to private sales.</p>
-
-                                <form className="flex flex-col sm:flex-row gap-3">
-                                    <input type="email" placeholder="your@email.com" className="flex-1 appearance-none bg-stone-50 border border-stone-200 rounded-sm px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-stone-400 focus:ring-1 focus:ring-stone-400 transition-all" />
-                                    <button type="button" className="px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded-sm hover:bg-stone-800 transition-colors">
-                                        Subscribe
-                                    </button>
-                                </form>
-                                <p className="text-[10px] text-stone-400 mt-4">We respect your secret garden. No spam.</p>
-                            </div>
-                        </section>
-                    </>
-                )}
+                        <form className="flex flex-col sm:flex-row gap-3">
+                            <input type="email" placeholder="your@email.com" className="flex-1 appearance-none bg-stone-50 border border-stone-200 rounded-sm px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-stone-400 focus:ring-1 focus:ring-stone-400 transition-all" />
+                            <button type="button" className="px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded-sm hover:bg-stone-800 transition-colors">
+                                Subscribe
+                            </button>
+                        </form>
+                        <p className="text-[10px] text-stone-400 mt-4">We respect your secret garden. No spam.</p>
+                    </div>
+                </section>
             </main>
 
             {/* ─── FOOTER ─── */}
@@ -617,6 +363,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </footer>
-        </div>
+        </div >
     );
 }
