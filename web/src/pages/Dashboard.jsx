@@ -15,6 +15,11 @@ export default function Dashboard() {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
+    // Artisan Shop States
+    const [artisanTab, setArtisanTab] = useState('overview');
+    const [orderTab, setOrderTab] = useState('all');
+    const [productTab, setProductTab] = useState('live');
+
     // Scroll effect for header
     useEffect(() => {
         const handleScroll = () => {
@@ -61,10 +66,20 @@ export default function Dashboard() {
 
                     {/* Desktop Nav */}
                     <nav className="hidden lg:flex gap-8 items-center absolute left-1/2 transform -translate-x-1/2">
-                        <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">New Arrivals</button>
-                        <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Browse</button>
-                        <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Shop by Mood</button>
-                        <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Daily Discover</button>
+                        {isArtisan ? (
+                            <>
+                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Seller Education</button>
+                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Marketing Centre</button>
+                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Help Centre</button>
+                            </>
+                        ) : (
+                            <>
+                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">New Arrivals</button>
+                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Browse</button>
+                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Shop by Mood</button>
+                                <button className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Daily Discover</button>
+                            </>
+                        )}
                     </nav>
 
                     {/* Actions */}
@@ -72,13 +87,16 @@ export default function Dashboard() {
                         <button className="text-stone-800 hover:text-stone-600 transition-colors hidden sm:block">
                             <Search size={20} strokeWidth={1.5} />
                         </button>
-                        <button className="text-stone-800 hover:text-stone-600 transition-colors relative">
-                            <ShoppingBag size={20} strokeWidth={1.5} />
-                            <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-stone-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-stone-800"></span>
-                            </span>
-                        </button>
+
+                        {!isArtisan && (
+                            <button className="text-stone-800 hover:text-stone-600 transition-colors relative">
+                                <ShoppingBag size={20} strokeWidth={1.5} />
+                                <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-stone-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-stone-800"></span>
+                                </span>
+                            </button>
+                        )}
 
                         {/* Profile Dropdown */}
                         <div className="relative border-l border-stone-200 pl-5 ml-1">
@@ -124,29 +142,255 @@ export default function Dashboard() {
 
             <main className="pt-20">
                 {isArtisan ? (
-                    <section className="max-w-7xl mx-auto px-6 py-24 min-h-[70vh]">
-                        <div className="mb-12">
-                            <h2 className="text-4xl md:text-5xl font-serif text-stone-900 tracking-tight mb-4">Artisan Dashboard</h2>
-                            <p className="text-stone-500 text-base font-light">Manage your floral creations and orders.</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <KpiCard title="Pending Orders" value="3" />
-                            <KpiCard title="Arranging" value="1" />
-                            <KpiCard title="Delivered today" value="12" />
-                        </div>
-                        <div className="mt-12 bg-white border border-stone-200 rounded-sm overflow-hidden">
-                            <div className="px-6 py-4 border-b border-stone-200 bg-[#FDFCF8] flex justify-between items-center">
-                                <h3 className="font-medium text-stone-900 uppercase tracking-wider text-xs">Recent Orders</h3>
-                                <button className="text-[10px] text-stone-500 hover:text-stone-900 transition-colors uppercase tracking-wider font-bold">View Board</button>
+                    <div className="max-w-7xl mx-auto px-6 py-12 min-h-[80vh]">
+                        <div className="mb-8 flex justify-between items-end">
+                            <div>
+                                <h1 className="text-3xl font-serif text-stone-900">Seller Centre</h1>
+                                <p className="text-stone-500 text-sm mt-1">Manage your shop, products, and orders.</p>
                             </div>
-                            <div className="p-6 text-center text-stone-400 text-sm py-20 flex flex-col items-center justify-center">
-                                <div className="w-16 h-16 rounded-full bg-stone-50 flex items-center justify-center mb-4">
-                                    <Package className="text-stone-300" size={24} />
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                            {/* SIDEBAR */}
+                            <aside className="lg:col-span-3">
+                                <div className="bg-white border border-stone-200 rounded-sm p-4 sticky top-24">
+                                    <div className="mb-6">
+                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Dashboard</h3>
+                                        <ul className="space-y-1">
+                                            <li>
+                                                <button onClick={() => setArtisanTab('overview')} className={`w-full text-left px-3 py-2 text-sm rounded-sm transition-colors ${artisanTab === 'overview' ? 'bg-stone-100 text-stone-900 font-medium' : 'text-stone-600 hover:bg-stone-50'}`}>Overview</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="mb-6">
+                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Orders</h3>
+                                        <ul className="space-y-1">
+                                            <li><button onClick={() => setArtisanTab('orders')} className={`w-full text-left px-3 py-2 text-sm rounded-sm transition-colors ${artisanTab === 'orders' ? 'bg-stone-100 text-stone-900 font-medium' : 'text-stone-600 hover:bg-stone-50'}`}>My Orders</button></li>
+                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Cancellations</button></li>
+                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Return / Refund</button></li>
+                                        </ul>
+                                    </div>
+                                    <div className="mb-6">
+                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Products</h3>
+                                        <ul className="space-y-1">
+                                            <li><button onClick={() => setArtisanTab('products')} className={`w-full text-left px-3 py-2 text-sm rounded-sm transition-colors ${artisanTab === 'products' ? 'bg-stone-100 text-stone-900 font-medium' : 'text-stone-600 hover:bg-stone-50'}`}>My Products</button></li>
+                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Add New Product</button></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-3">Finance</h3>
+                                        <ul className="space-y-1">
+                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">My Income</button></li>
+                                            <li><button className="w-full text-left px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 rounded-sm transition-colors">Bank Accounts</button></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <p>No recent orders to display.</p>
+                            </aside>
+
+                            {/* MAIN CONTENT */}
+                            <div className="lg:col-span-9 space-y-6">
+                                {artisanTab === 'overview' && (
+                                    <>
+                                        {/* To Do List */}
+                                        <div className="bg-white border border-stone-200 rounded-sm p-6">
+                                            <h3 className="text-lg font-serif text-stone-900 mb-6 font-medium">To Do List</h3>
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                                <div className="text-center group cursor-pointer">
+                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">0</p>
+                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">Unpaid</p>
+                                                </div>
+                                                <div className="text-center group cursor-pointer border-l border-stone-100">
+                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">3</p>
+                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">To Process Shipment</p>
+                                                </div>
+                                                <div className="text-center group cursor-pointer border-l border-stone-100">
+                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">0</p>
+                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">Pending Return</p>
+                                                </div>
+                                                <div className="text-center group cursor-pointer border-l border-stone-100">
+                                                    <p className="text-2xl font-light text-stone-900 group-hover:text-amber-600 transition-colors">1</p>
+                                                    <p className="text-xs text-stone-500 mt-1 uppercase tracking-wider">Sold Out</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Business Insights */}
+                                        <div className="bg-white border border-stone-200 rounded-sm p-6">
+                                            <div className="flex justify-between items-center mb-6">
+                                                <h3 className="text-lg font-serif text-stone-900 font-medium">Business Insights</h3>
+                                                <button className="text-xs text-stone-500 hover:text-stone-900 flex items-center gap-1 transition-colors">More <ArrowRight size={14} /></button>
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                                <KpiCard title="Visitors" value="124" />
+                                                <KpiCard title="Page Views" value="459" />
+                                                <KpiCard title="Orders" value="4" />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+
+                                {artisanTab === 'orders' && (
+                                    <div className="bg-white border border-stone-200 rounded-sm">
+                                        <div className="border-b border-stone-200">
+                                            <nav className="flex px-2 overflow-x-auto" aria-label="Tabs">
+                                                {['All', 'Unpaid', 'To Ship', 'Shipping', 'Completed', 'Cancelled'].map((tab) => (
+                                                    <button
+                                                        key={tab}
+                                                        onClick={() => setOrderTab(tab.toLowerCase())}
+                                                        className={`whitespace-nowrap py-4 px-6 text-sm font-medium border-b-2 transition-colors ${orderTab === tab.toLowerCase()
+                                                            ? 'border-stone-900 text-stone-900'
+                                                            : 'border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300'
+                                                            }`}
+                                                    >
+                                                        {tab}
+                                                    </button>
+                                                ))}
+                                            </nav>
+                                        </div>
+                                        <div className="p-6">
+                                            <div className="flex gap-4 mb-6">
+                                                <div className="flex-1 relative">
+                                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={16} />
+                                                    <input type="text" placeholder="Search Order ID or Buyer Name" className="w-full pl-10 pr-4 py-2 text-sm border border-stone-200 rounded-sm focus:outline-none focus:border-stone-400 bg-stone-50" />
+                                                </div>
+                                                <button className="px-4 py-2 bg-stone-900 text-white text-sm font-medium rounded-sm hover:bg-stone-800 transition-colors">Search</button>
+                                            </div>
+
+                                            {/* Orders Table */}
+                                            <div className="overflow-x-auto">
+                                                <table className="w-full text-sm text-left">
+                                                    <thead className="text-xs text-stone-500 uppercase bg-stone-50 border-y border-stone-200">
+                                                        <tr>
+                                                            <th className="px-4 py-3 font-medium">Products</th>
+                                                            <th className="px-4 py-3 font-medium text-center">Total Price</th>
+                                                            <th className="px-4 py-3 font-medium text-center">Status</th>
+                                                            <th className="px-4 py-3 font-medium text-center">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr className="border-b border-stone-100">
+                                                            <td className="px-4 py-4 min-w-[250px]">
+                                                                <div className="flex gap-3 items-start">
+                                                                    <img src={products[0].image} className="w-12 h-12 object-cover border border-stone-200 rounded-sm flex-shrink-0" alt="" />
+                                                                    <div>
+                                                                        <p className="text-stone-900 font-medium">{products[0].name}</p>
+                                                                        <p className="text-stone-500 text-xs">x1</p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="px-4 py-4 text-center font-medium text-stone-900 whitespace-nowrap">{products[0].price}</td>
+                                                            <td className="px-4 py-4 text-center">
+                                                                <span className="bg-amber-100 text-amber-800 text-[10px] uppercase font-bold px-2 py-1 rounded-sm whitespace-nowrap">To Ship</span>
+                                                            </td>
+                                                            <td className="px-4 py-4 text-center">
+                                                                <button className="text-sm text-stone-600 border border-stone-300 px-3 py-1.5 rounded-sm hover:bg-stone-50 transition-colors whitespace-nowrap">Arrange Shipment</button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr className="border-b border-stone-100">
+                                                            <td className="px-4 py-4 min-w-[250px]">
+                                                                <div className="flex gap-3 items-start">
+                                                                    <img src={products[3].image} className="w-12 h-12 object-cover border border-stone-200 rounded-sm flex-shrink-0" alt="" />
+                                                                    <div>
+                                                                        <p className="text-stone-900 font-medium">{products[3].name}</p>
+                                                                        <p className="text-stone-500 text-xs">x2</p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="px-4 py-4 text-center font-medium text-stone-900 whitespace-nowrap">$110</td>
+                                                            <td className="px-4 py-4 text-center">
+                                                                <span className="bg-blue-100 text-blue-800 text-[10px] uppercase font-bold px-2 py-1 rounded-sm whitespace-nowrap">Shipping</span>
+                                                            </td>
+                                                            <td className="px-4 py-4 text-center">
+                                                                <button className="text-sm text-stone-600 hover:text-stone-900 transition-colors border-b border-stone-300 hover:border-stone-900 pb-0.5 whitespace-nowrap">Check Logistics</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {artisanTab === 'products' && (
+                                    <div className="bg-white border border-stone-200 rounded-sm">
+                                        <div className="border-b border-stone-200 flex flex-col sm:flex-row justify-between sm:items-center pr-6 gap-4 sm:gap-0">
+                                            <nav className="flex px-2 overflow-x-auto" aria-label="Tabs">
+                                                {['All', 'Live', 'Sold Out', 'Reviewing', 'Violation'].map((tab) => (
+                                                    <button
+                                                        key={tab}
+                                                        onClick={() => setProductTab(tab.toLowerCase())}
+                                                        className={`whitespace-nowrap py-4 px-6 text-sm font-medium border-b-2 transition-colors ${productTab === tab.toLowerCase()
+                                                            ? 'border-stone-900 text-stone-900'
+                                                            : 'border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300'
+                                                            }`}
+                                                    >
+                                                        {tab} {tab === 'Live' && '(5)'} {tab === 'Sold Out' && '(1)'}
+                                                    </button>
+                                                ))}
+                                            </nav>
+                                            <div className="px-6 pb-4 sm:p-0 sm:pl-4 self-start sm:self-center">
+                                                <button className="flex items-center gap-2 bg-stone-900 text-white px-4 py-2 rounded-sm text-sm font-medium hover:bg-stone-800 transition-colors whitespace-nowrap">
+                                                    <Plus size={16} /> Add New Product
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div className="p-6">
+                                            <div className="flex gap-4 mb-6">
+                                                <div className="flex-1 relative">
+                                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={16} />
+                                                    <input type="text" placeholder="Search product name or SKU" className="w-full pl-10 pr-4 py-2 text-sm border border-stone-200 rounded-sm focus:outline-none focus:border-stone-400 bg-stone-50" />
+                                                </div>
+                                                <button className="px-4 py-2 bg-stone-100 text-stone-900 border border-stone-200 text-sm font-medium rounded-sm hover:bg-stone-200 transition-colors whitespace-nowrap">Category <ChevronDown size={14} className="inline ml-1" /></button>
+                                            </div>
+
+                                            {/* Products Table */}
+                                            <div className="overflow-x-auto">
+                                                <table className="w-full text-sm text-left">
+                                                    <thead className="text-xs text-stone-500 uppercase bg-stone-50 border-y border-stone-200">
+                                                        <tr>
+                                                            <th className="px-4 py-3 font-medium">Product Name</th>
+                                                            <th className="px-4 py-3 font-medium text-center">Price</th>
+                                                            <th className="px-4 py-3 font-medium text-center">Stock</th>
+                                                            <th className="px-4 py-3 font-medium text-center">Sales</th>
+                                                            <th className="px-4 py-3 font-medium text-center">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {products.map((product) => (
+                                                            <tr key={product.id} className="border-b border-stone-100 hover:bg-stone-50/50 transition-colors">
+                                                                <td className="px-4 py-4 min-w-[250px]">
+                                                                    <div className="flex gap-3 items-start">
+                                                                        <img src={product.image} className="w-12 h-12 object-cover border border-stone-200 rounded-sm flex-shrink-0" alt="" />
+                                                                        <div>
+                                                                            <p className="text-stone-900 font-medium line-clamp-2">{product.name}</p>
+                                                                            <p className="text-stone-500 text-xs mt-1 border border-stone-200 inline-block px-1 bg-white">SKU: {product.name.substring(0, 3).toUpperCase()}-00{product.id}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td className="px-4 py-4 text-center font-medium text-stone-900 whitespace-nowrap">{product.price}</td>
+                                                                <td className="px-4 py-4 text-center">
+                                                                    {product.id === 2 ? <span className="text-red-500 font-medium">0</span> : <span className="text-stone-900">{Math.floor(Math.random() * 50) + 5}</span>}
+                                                                </td>
+                                                                <td className="px-4 py-4 text-center text-stone-500">
+                                                                    {Math.floor(Math.random() * 20)}
+                                                                </td>
+                                                                <td className="px-4 py-4 text-center">
+                                                                    <div className="flex items-center justify-center gap-3">
+                                                                        <button className="text-sm text-stone-600 hover:text-stone-900 transition-colors font-medium">Edit</button>
+                                                                        <button className="text-sm text-stone-400 hover:text-stone-900 transition-colors">More</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    </section>
+                    </div>
                 ) : (
                     <>
                         {/* ─── HERO SECTION ─── */}

@@ -6,7 +6,7 @@ import FormInput from '../components/FormInput';
 import PrimaryButton from '../components/PrimaryButton';
 
 export default function Register() {
-    const { register } = useAuth();
+    const { register, login } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
@@ -23,6 +23,7 @@ export default function Register() {
         setLoading(true);
         try {
             await register(formData.name, formData.email, formData.password, formData.role);
+            await login(formData.email, formData.password);
             navigate('/dashboard');
         } catch (err) {
             setError(err.message || 'Failed to register');

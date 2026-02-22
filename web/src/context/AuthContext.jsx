@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
 
         try {
             const response = await authAPI.getMe();
-            setUser(response.data);
+            setUser(response.data.data);
         } catch (error) {
             localStorage.removeItem('petal_token');
             localStorage.removeItem('petal_user');
@@ -36,7 +36,7 @@ export function AuthProvider({ children }) {
 
     const login = async (email, password) => {
         const response = await authAPI.login({ email, password });
-        const data = response.data;
+        const data = response.data.data;
 
         localStorage.setItem('petal_token', data.token);
         localStorage.setItem('petal_user', JSON.stringify(data));
