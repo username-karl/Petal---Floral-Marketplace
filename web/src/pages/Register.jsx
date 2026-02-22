@@ -36,7 +36,7 @@ export default function Register() {
             {/* Left Column: Image */}
             <div className="hidden lg:block w-1/2 bg-stone-100 relative overflow-hidden">
                 <img
-                    src="https://images.unsplash.com/photo-1620023412588-426c11b1510e?q=80&w=2574&auto=format&fit=crop"
+                    src="/images/register_background_1771726826857.png"
                     alt="Floral Arrangement"
                     className="absolute inset-0 w-full h-full object-cover grayscale-[20%] opacity-90"
                 />

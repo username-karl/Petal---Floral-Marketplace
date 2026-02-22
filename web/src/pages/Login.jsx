@@ -96,7 +96,7 @@ export default function Login() {
             {/* Right Column: Image */}
             <div className="hidden lg:block w-1/2 bg-stone-100 relative overflow-hidden">
                 <img
-                    src="https://images.unsplash.com/photo-1596627672288-757c91799e0c?q=80&w=2574&auto=format&fit=crop"
+                    src="/images/login_background_1771726810843.png"
                     alt="Dried Flowers"
                     className="absolute inset-0 w-full h-full object-cover grayscale-[20%] opacity-90"
                 />

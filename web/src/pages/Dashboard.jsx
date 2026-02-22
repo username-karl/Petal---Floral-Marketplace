@@ -35,12 +35,12 @@ export default function Dashboard() {
 
     // Mock Products Data (Flower House style)
     const products = [
-        { id: 1, name: "Wild Pampas", subtitle: "Dried Reed Grass", price: "$45", artisan: "Atelier Vert", image: "https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=2576&auto=format&fit=crop", tag: "Bestseller" },
-        { id: 2, name: "Eucalyptus Cinerea", subtitle: "Preserved Foliage", price: "$28", artisan: "Maison Fleuri", image: "https://images.unsplash.com/photo-1596627672288-757c91799e0c?q=80&w=1600&auto=format&fit=crop" },
-        { id: 3, name: "Cotton Softness", subtitle: "Natural Cotton Stems", price: "$32", artisan: "Studio Petal", image: "https://images.unsplash.com/photo-1596726884518-e3776fb1e9fa?q=80&w=1600&auto=format&fit=crop" },
-        { id: 4, name: "Kanso Vase", subtitle: "Artisan Ceramic", price: "$55", artisan: "Ceramics by Jo", image: "https://images.unsplash.com/photo-1612361668884-1b1511979313?q=80&w=1600&auto=format&fit=crop" },
-        { id: 5, name: "The Aurora", subtitle: "Hydrangea & Immortelle", price: "$49", artisan: "L'Herbier", image: "https://images.unsplash.com/photo-1620023412588-426c11b1510e?q=80&w=1600&auto=format&fit=crop" },
-        { id: 6, name: "Winter Wreath", subtitle: "Pine & Berries", price: "$65", artisan: "Forest & Co.", image: "https://images.unsplash.com/photo-1606752834079-5e76a91ed525?q=80&w=1600&auto=format&fit=crop", tag: "Unique Piece" },
+        { id: 1, name: "Wild Pampas", subtitle: "Dried Reed Grass", price: "$45", artisan: "Atelier Vert", image: "/images/product_pampas_1771726515735.png", tag: "Bestseller" },
+        { id: 2, name: "Eucalyptus Cinerea", subtitle: "Preserved Foliage", price: "$28", artisan: "Maison Fleuri", image: "/images/product_eucalyptus_1771726530879.png" },
+        { id: 3, name: "Cotton Softness", subtitle: "Natural Cotton Stems", price: "$32", artisan: "Studio Petal", image: "/images/product_cotton_1771726545396.png" },
+        { id: 4, name: "Kanso Vase", subtitle: "Artisan Ceramic", price: "$55", artisan: "Ceramics by Jo", image: "/images/product_ceramic_vase_1771726567287.png" },
+        { id: 5, name: "The Aurora", subtitle: "Hydrangea & Immortelle", price: "$49", artisan: "L'Herbier", image: "/images/product_aurora_hydrangea_1771726583839.png" },
+        { id: 6, name: "Winter Wreath", subtitle: "Pine & Berries", price: "$65", artisan: "Forest & Co.", image: "/images/product_winter_wreath_1771726603408.png", tag: "Unique Piece" },
     ];
 
     return (
